@@ -12,6 +12,7 @@ namespace CommonLib
     {
         protected ILog log;
 
+
         public Logger(string loggerName)
         {
             log = LogManager.GetLogger(loggerName);
