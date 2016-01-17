@@ -87,7 +87,7 @@ namespace StokTakip.UI.Forms
                         ActionDate = DateTime.Now,
                         Description = NoteTextBox.Text,
                         Item = this.SelectedItem,
-                        Type = this.Difference > 0 ? ActionType.Increase : ActionType.Decrease,
+                        ActionType = this.Difference > 0 ? ActionType.Increase : ActionType.Decrease,
                         NewQuantity = this.SelectedItem.Quantity + this.Difference,
                         OldQuantity = this.SelectedItem.Quantity,
                         Change = this.Difference
@@ -103,7 +103,7 @@ namespace StokTakip.UI.Forms
         public void ShowMessage(string message, string group, MessageType type)
         {
             MessageLabel.Text = message;
-            MessageLabel.ForeColor = type.GetColor();
+            MessageLabel.BackColor = type.GetColor();
 
             if (type == MessageType.Success)
             {

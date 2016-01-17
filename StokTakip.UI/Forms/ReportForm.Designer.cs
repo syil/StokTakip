@@ -28,71 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.Panel FooterPanel;
             System.Windows.Forms.Panel HeaderPanel;
             System.Windows.Forms.Label HeaderTextLabel;
-            this.MainSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.TypesFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.ReportingChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.StatusTextLabel = new System.Windows.Forms.Label();
             this.StatusPictureBox = new System.Windows.Forms.PictureBox();
+            this.MainSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.TypesFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.SaveAsPictureLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.ReportingChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.ChartImageSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             FooterPanel = new System.Windows.Forms.Panel();
             HeaderPanel = new System.Windows.Forms.Panel();
             HeaderTextLabel = new System.Windows.Forms.Label();
+            FooterPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.StatusPictureBox)).BeginInit();
+            HeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainSplitContainer)).BeginInit();
             this.MainSplitContainer.Panel1.SuspendLayout();
             this.MainSplitContainer.Panel2.SuspendLayout();
             this.MainSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ReportingChart)).BeginInit();
-            FooterPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.StatusPictureBox)).BeginInit();
-            HeaderPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // MainSplitContainer
-            // 
-            this.MainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainSplitContainer.IsSplitterFixed = true;
-            this.MainSplitContainer.Location = new System.Drawing.Point(0, 60);
-            this.MainSplitContainer.Name = "MainSplitContainer";
-            // 
-            // MainSplitContainer.Panel1
-            // 
-            this.MainSplitContainer.Panel1.Controls.Add(this.TypesFlowLayoutPanel);
-            // 
-            // MainSplitContainer.Panel2
-            // 
-            this.MainSplitContainer.Panel2.Controls.Add(this.SaveAsPictureLinkLabel);
-            this.MainSplitContainer.Panel2.Controls.Add(this.ReportingChart);
-            this.MainSplitContainer.Size = new System.Drawing.Size(745, 410);
-            this.MainSplitContainer.SplitterDistance = 175;
-            this.MainSplitContainer.TabIndex = 0;
-            // 
-            // TypesFlowLayoutPanel
-            // 
-            this.TypesFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TypesFlowLayoutPanel.Location = new System.Drawing.Point(0, 0);
-            this.TypesFlowLayoutPanel.Name = "TypesFlowLayoutPanel";
-            this.TypesFlowLayoutPanel.Size = new System.Drawing.Size(175, 410);
-            this.TypesFlowLayoutPanel.TabIndex = 0;
-            // 
-            // ReportingChart
-            // 
-            chartArea3.Name = "MainChartArea";
-            this.ReportingChart.ChartAreas.Add(chartArea3);
-            this.ReportingChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.Name = "Öğeler";
-            this.ReportingChart.Legends.Add(legend3);
-            this.ReportingChart.Location = new System.Drawing.Point(0, 0);
-            this.ReportingChart.Name = "ReportingChart";
-            this.ReportingChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
-            this.ReportingChart.Size = new System.Drawing.Size(566, 410);
-            this.ReportingChart.TabIndex = 0;
-            this.ReportingChart.Text = "ReportingChart";
             // 
             // FooterPanel
             // 
@@ -146,9 +105,38 @@
             HeaderTextLabel.Text = "Raporlar && Grafikler";
             HeaderTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // MainSplitContainer
+            // 
+            this.MainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainSplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.MainSplitContainer.IsSplitterFixed = true;
+            this.MainSplitContainer.Location = new System.Drawing.Point(0, 60);
+            this.MainSplitContainer.Name = "MainSplitContainer";
+            // 
+            // MainSplitContainer.Panel1
+            // 
+            this.MainSplitContainer.Panel1.Controls.Add(this.TypesFlowLayoutPanel);
+            // 
+            // MainSplitContainer.Panel2
+            // 
+            this.MainSplitContainer.Panel2.Controls.Add(this.SaveAsPictureLinkLabel);
+            this.MainSplitContainer.Panel2.Controls.Add(this.ReportingChart);
+            this.MainSplitContainer.Size = new System.Drawing.Size(745, 410);
+            this.MainSplitContainer.SplitterDistance = 175;
+            this.MainSplitContainer.TabIndex = 0;
+            // 
+            // TypesFlowLayoutPanel
+            // 
+            this.TypesFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TypesFlowLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.TypesFlowLayoutPanel.Name = "TypesFlowLayoutPanel";
+            this.TypesFlowLayoutPanel.Size = new System.Drawing.Size(175, 410);
+            this.TypesFlowLayoutPanel.TabIndex = 0;
+            // 
             // SaveAsPictureLinkLabel
             // 
             this.SaveAsPictureLinkLabel.ActiveLinkColor = System.Drawing.SystemColors.HotTrack;
+            this.SaveAsPictureLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.SaveAsPictureLinkLabel.AutoSize = true;
             this.SaveAsPictureLinkLabel.BackColor = System.Drawing.Color.White;
             this.SaveAsPictureLinkLabel.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -162,6 +150,20 @@
             this.SaveAsPictureLinkLabel.Text = "Resim Olarak Kaydet";
             this.SaveAsPictureLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.SaveAsPictureLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.SaveAsPictureLinkLabel_LinkClicked);
+            // 
+            // ReportingChart
+            // 
+            chartArea1.Name = "MainChartArea";
+            this.ReportingChart.ChartAreas.Add(chartArea1);
+            this.ReportingChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Name = "Öğeler";
+            this.ReportingChart.Legends.Add(legend1);
+            this.ReportingChart.Location = new System.Drawing.Point(0, 0);
+            this.ReportingChart.Name = "ReportingChart";
+            this.ReportingChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
+            this.ReportingChart.Size = new System.Drawing.Size(566, 410);
+            this.ReportingChart.TabIndex = 0;
+            this.ReportingChart.Text = "ReportingChart";
             // 
             // ChartImageSaveFileDialog
             // 
@@ -183,15 +185,15 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Raporlar & Grafikler";
+            FooterPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.StatusPictureBox)).EndInit();
+            HeaderPanel.ResumeLayout(false);
             this.MainSplitContainer.Panel1.ResumeLayout(false);
             this.MainSplitContainer.Panel2.ResumeLayout(false);
             this.MainSplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainSplitContainer)).EndInit();
             this.MainSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ReportingChart)).EndInit();
-            FooterPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.StatusPictureBox)).EndInit();
-            HeaderPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

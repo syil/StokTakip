@@ -1,5 +1,5 @@
-﻿using CommonLib;
-using CommonLib.IoC;
+﻿using CommonLibrary.Utilities;
+using CommonLibrary.IoC;
 using log4net.Config;
 using StokTakip.Data.Base;
 using System;
@@ -9,14 +9,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Deployment.Application;
 
 namespace StokTakip.Core
 {
     public class StokTakipApplicationContext : ApplicationContext
     {
-        private static readonly Logger logger = new Logger(typeof(StokTakipApplicationContext));
+        private static readonly Logger logger = new Logger();
 
         public bool IsRestoreMode { get; private set; }
+        public bool RunningOnAnotherInstance
+        {
+            get
+            {
+                return CheckIfAlreadyRunningInstance();
+            }
+        }
 
         public StokTakipApplicationContext(string[] args)
             : base()
@@ -30,15 +38,21 @@ namespace StokTakip.Core
             else
             {
                 this.IsRestoreMode = false;
-
-                if (CheckIfAlreadyRunningInstance())
-                {
-                    MessageBox.Show("Uygulama zaten çalışıyor", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    Application.Exit();
-                }
             
                 var databaseManager = DependencyResolver.Instance.Resolve<IDatabaseManager>();
                 databaseManager.Check();
+                
+                if (ApplicationDeployment.IsNetworkDeployed)
+                {
+                    var currentDeployment = ApplicationDeployment.CurrentDeployment;
+
+                    if (currentDeployment.IsFirstRun)
+                    {
+                        logger.Info("First run for version : [{0}]", currentDeployment.UpdatedVersion);
+
+                        databaseManager.Update();
+                    }
+                }
             }
         }
 

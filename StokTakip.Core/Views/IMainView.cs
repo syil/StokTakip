@@ -9,10 +9,6 @@ namespace StokTakip.Core.Views
 {
     public interface IMainView : IView
     {
-        void SetActionLogList(IEnumerable<ActionLog> actionLogs);
-        void SetItemList(IEnumerable<Item> items);
-        Item SelectedItem { get; }
-        ActionLog SelectedActionLog { get; }
-        string ItemFilterText { get; }
+
     }
 }

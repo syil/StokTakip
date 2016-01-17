@@ -28,7 +28,7 @@ namespace StokTakip.Core.Presenters
                 }
                 catch (Exception ex)
                 {
-                    this.logger.Error(ex);
+                    this.logger.Exception(ex);
                     this.view.ShowMessage("Öğe eklenirken bir sorun oluştu", "AddItem", MessageType.Error);
                 } 
             }

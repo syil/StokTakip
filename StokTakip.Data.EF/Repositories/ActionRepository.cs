@@ -1,12 +1,11 @@
 ﻿using StokTakip.Data.Base.Repositories;
-using StokTakip.Data.EF.Mappers;
 using StokTakip.Data.EF.Model;
-using StokTakip.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace StokTakip.Data.EF.Repositories
 {
@@ -23,7 +22,7 @@ namespace StokTakip.Data.EF.Repositories
             try
             {
                 var models = context.ActionLogs.Where(a => a.ItemId == item.Id);
-                var entities = models.ToList().Select(a => ActionLogMapper.Instance.ToEntity(a));
+                var entities = Mapper.Map<List<Entities.ActionLog>>(models.ToList());
 
                 return entities;
             }
@@ -38,15 +37,14 @@ namespace StokTakip.Data.EF.Repositories
         {
             try
             {
-                var model = new Model.ActionLog();
-                ActionLogMapper.Instance.FromEntity(entity, model);
+                var model = Mapper.Map<ActionLog>(entity);
 
-                context.AddToActionLogs(model);
+                context.ActionLogs.Add(model);
                 context.SaveChanges();
             }
             catch (Exception ex)
             {
-                base.RaiseException(ex, entity);
+                base.RaiseException(ex);
             }
         }
 
@@ -59,10 +57,7 @@ namespace StokTakip.Data.EF.Repositories
 
                 if (model != null)
                 {
-                    var entity = new Entities.ActionLog();
-                    ActionLogMapper.Instance.ToEntity(model, entity);
-
-                    return entity;
+                    return Mapper.Map<Entities.ActionLog>(model);
                 }
                 else
                 {
@@ -80,11 +75,9 @@ namespace StokTakip.Data.EF.Repositories
         {
             try
             {
-                var models = context.ActionLogs;
+                var entities = context.ActionLogs.Select(a => a);
 
-                var entities = models.Select(a => a);
-
-                return entities.ToList().Select(a => ActionLogMapper.Instance.ToEntity(a));
+                return Mapper.Map<List<Entities.ActionLog>>(entities.ToList());
             }
             catch (Exception ex)
             {
@@ -118,7 +111,7 @@ namespace StokTakip.Data.EF.Repositories
 
                 if (model != null)
                 {
-                    context.DeleteObject(model);
+                    context.ActionLogs.Remove(model);
                     context.SaveChanges();
                 }
                 else
@@ -138,10 +131,7 @@ namespace StokTakip.Data.EF.Repositories
             {
                 var logs = context.ActionLogs.Where(a => a.ItemId == item.Id);
 
-                foreach(var log in logs)
-                {
-                    context.DeleteObject(log);
-                }
+                context.ActionLogs.RemoveRange(logs);
                 context.SaveChanges();
             }
             catch (Exception ex)
@@ -158,7 +148,7 @@ namespace StokTakip.Data.EF.Repositories
 
                 if (model != null)
                 {
-                    ActionLogMapper.Instance.FromEntity(entity, model);
+                    model = Mapper.Map(entity, model);
 
                     context.SaveChanges();
                 }
@@ -182,7 +172,7 @@ namespace StokTakip.Data.EF.Repositories
                 if (lastActionLog != null)
                 {
                     lastActionLog.Item.Quantity = lastActionLog.OldQuantity;
-                    context.DeleteObject(lastActionLog);
+                    context.ActionLogs.Remove(lastActionLog);
 
                     context.SaveChanges();
                 }

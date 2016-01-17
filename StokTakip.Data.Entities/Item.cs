@@ -13,7 +13,7 @@ namespace StokTakip.Data.Entities
         public int Quantity { get; set; }
         public DateTime InsertDate { get; set; }
         public ItemProperty[] Properties { get; set; }
-        public ActionLog[] Actions { get; set; }
+        public ActionLog[] ActionLogs { get; set; }
 
         public override string ToString()
         {
@@ -30,6 +30,11 @@ namespace StokTakip.Data.Entities
             {
                 return false;
             }
+        }
+
+        public override int GetHashCode()
+        {
+            return Id;
         }
     }
 }

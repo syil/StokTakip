@@ -4,54 +4,53 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="StokTakip.Data.EF.Model.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="StokTakipDataEFModelStoreContainer">
-          <EntitySet Name="ActionLogs" EntityType="StokTakip.Data.EF.Model.Store.ActionLogs" store:Type="Tables" />
-          <EntitySet Name="ItemProperties" EntityType="StokTakip.Data.EF.Model.Store.ItemProperties" store:Type="Tables" />
-          <EntitySet Name="Items" EntityType="StokTakip.Data.EF.Model.Store.Items" store:Type="Tables" />
-          <AssociationSet Name="FK_ItemItemProperty" Association="StokTakip.Data.EF.Model.Store.FK_ItemItemProperty">
-            <End Role="Items" EntitySet="Items" />
-            <End Role="ItemProperties" EntitySet="ItemProperties" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemToActionLog" Association="StokTakip.Data.EF.Model.Store.FK_ItemToActionLog">
-            <End Role="Items" EntitySet="Items" />
-            <End Role="ActionLogs" EntitySet="ActionLogs" />
-          </AssociationSet>
-        </EntityContainer>
+    <Schema Namespace="StokTakip.Data.EF.Model.Store" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ActionLogs">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemId" Type="int" Nullable="false" />
           <Property Name="OldQuantity" Type="int" Nullable="false" />
           <Property Name="NewQuantity" Type="int" Nullable="false" />
           <Property Name="Change" Type="int" Nullable="false" />
           <Property Name="ActionDate" Type="datetime" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="4000" Nullable="false" />
           <Property Name="ActionType" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Expenses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="ExpenseDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ItemProperties">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemId" Type="int" Nullable="false" />
-          <Property Name="Key" Type="nvarchar" Nullable="false" />
-          <Property Name="Value" Type="nvarchar" Nullable="false" />
+          <Property Name="Key" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="4000" Nullable="false" />
         </EntityType>
         <EntityType Name="Items">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="nvarchar" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="4000" Nullable="false" />
           <Property Name="InsertDate" Type="datetime" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_ItemItemProperty">
-          <End Role="Items" Type="StokTakip.Data.EF.Model.Store.Items" Multiplicity="1" />
-          <End Role="ItemProperties" Type="StokTakip.Data.EF.Model.Store.ItemProperties" Multiplicity="*" />
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="ItemProperties" Type="Self.ItemProperties" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Items">
               <PropertyRef Name="Id" />
@@ -62,8 +61,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ItemToActionLog">
-          <End Role="Items" Type="StokTakip.Data.EF.Model.Store.Items" Multiplicity="1" />
-          <End Role="ActionLogs" Type="StokTakip.Data.EF.Model.Store.ActionLogs" Multiplicity="*" />
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="ActionLogs" Type="Self.ActionLogs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Items">
               <PropertyRef Name="Id" />
@@ -73,6 +72,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="StokTakipDataEFModelStoreContainer">
+          <EntitySet Name="ActionLogs" EntityType="Self.ActionLogs" store:Type="Tables" />
+          <EntitySet Name="Expenses" EntityType="Self.Expenses" store:Type="Tables" />
+          <EntitySet Name="ItemProperties" EntityType="Self.ItemProperties" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" store:Type="Tables" />
+          <AssociationSet Name="FK_ItemItemProperty" Association="Self.FK_ItemItemProperty">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="ItemProperties" EntitySet="ItemProperties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemToActionLog" Association="Self.FK_ItemToActionLog">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="ActionLogs" EntitySet="ActionLogs" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -89,6 +102,7 @@
             <End Role="Item" EntitySet="Items" />
             <End Role="ItemProperty" EntitySet="ItemProperties" />
           </AssociationSet>
+          <EntitySet Name="Expenses" EntityType="StokTakip.Data.EF.Model.Expense" />
         </EntityContainer>
         <EnumType Name="ActionType" UnderlyingType="Int16">
           <Member Name="Increase" Value="1" />
@@ -106,7 +120,7 @@
           <Property Type="DateTime" Name="ActionDate" Nullable="false" Precision="3" />
           <Property Type="String" Name="Description" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="StokTakip.Data.EF.Model.ActionType" Name="ActionType" Nullable="false" />
-          <NavigationProperty Name="Item" Relationship="StokTakip.Data.EF.Model.FK_ItemToActionLog" FromRole="ActionLog" ToRole="Item" />
+          <NavigationProperty Name="Item" Relationship="StokTakip.Data.EF.Model.FK_ItemToActionLog" FromRole="ActionLog" ToRole="Item" cg:SetterAccess="Protected" />
         </EntityType>
         <EntityType Name="ItemProperty">
           <Key>
@@ -116,18 +130,18 @@
           <Property Type="Int32" Name="ItemId" Nullable="false" />
           <Property Type="String" Name="Key" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Value" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Item" Relationship="StokTakip.Data.EF.Model.FK_ItemItemProperty" FromRole="ItemProperty" ToRole="Item" />
+          <NavigationProperty Name="Item" Relationship="StokTakip.Data.EF.Model.FK_ItemItemProperty" FromRole="ItemProperty" ToRole="Item" cg:SetterAccess="Protected" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" cg:SetterAccess="Public" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="InsertDate" Nullable="false" Precision="3" />
           <Property Type="Int32" Name="Quantity" Nullable="false" />
-          <NavigationProperty Name="ActionLogs" Relationship="StokTakip.Data.EF.Model.FK_ItemToActionLog" FromRole="Item" ToRole="ActionLog" />
-          <NavigationProperty Name="Properties" Relationship="StokTakip.Data.EF.Model.FK_ItemItemProperty" FromRole="Item" ToRole="ItemProperty" />
+          <NavigationProperty Name="ActionLogs" Relationship="StokTakip.Data.EF.Model.FK_ItemToActionLog" FromRole="Item" ToRole="ActionLog" cg:SetterAccess="Protected" />
+          <NavigationProperty Name="Properties" Relationship="StokTakip.Data.EF.Model.FK_ItemItemProperty" FromRole="Item" ToRole="ItemProperty" cg:SetterAccess="Protected" />
         </EntityType>
         <Association Name="FK_ItemToActionLog">
           <End Type="StokTakip.Data.EF.Model.Item" Role="Item" Multiplicity="1" />
@@ -153,6 +167,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Expense">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ExpenseDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="StokTakip.Data.EF.Model.ExpenseStatus" Nullable="false" />
+        </EntityType>
+        <EnumType Name="ExpenseStatus">
+          <Member Name="Deleted" Value="0" />
+          <Member Name="Active" Value="1" />
+        </EnumType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -193,6 +223,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Expenses">
+            <EntityTypeMapping TypeName="StokTakip.Data.EF.Model.Expense">
+              <MappingFragment StoreEntitySet="Expenses">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ExpenseDate" ColumnName="ExpenseDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -206,9 +249,10 @@
     <edmx:Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Default" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
       </DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->

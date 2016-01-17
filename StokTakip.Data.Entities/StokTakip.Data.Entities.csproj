@@ -38,6 +38,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonLibrary.Core, Version=1.0.0.36696, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonLibrary.Core.1.0.0.36696\lib\net40\CommonLibrary.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,7 +62,9 @@
     <Compile Include="ActionLog.cs" />
     <Compile Include="Enums\ActionType.cs" />
     <Compile Include="Enums\ChartType.cs" />
+    <Compile Include="Enums\ExpenseStatus.cs" />
     <Compile Include="Enums\ReportType.cs" />
+    <Compile Include="Expense.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="ItemProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,10 +73,7 @@
     <Compile Include="ReportSerieData.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommonLib\CommonLib.csproj">
-      <Project>{48e38ec3-8464-44c0-9d39-155cbf35d93e}</Project>
-      <Name>CommonLib</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

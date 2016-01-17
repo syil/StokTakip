@@ -17,6 +17,8 @@ namespace StokTakip.Core.Presenters
         public override void Initialize()
         {
             this.Refresh();
+
+            base.Initialize();
         }
 
         public void Refresh()
@@ -28,7 +30,7 @@ namespace StokTakip.Core.Presenters
             }
             catch (Exception ex)
             {
-                this.logger.Error(ex);
+                this.logger.Exception(ex);
                 this.view.ShowMessage("Öğeler çekilirken sorun oluştu", "RefreshItems", MessageType.Error);
             }
         }
@@ -51,7 +53,7 @@ namespace StokTakip.Core.Presenters
                 }
                 catch (Exception ex)
                 {
-                    this.logger.Error(ex);
+                    this.logger.Exception(ex);
                     this.view.ShowMessage("Olay eklenirken bir sorun oluştu", "AddActionLog", MessageType.Error);
                 }
             }

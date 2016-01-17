@@ -15,7 +15,7 @@ namespace StokTakip.Data.Entities
         public int OldQuantity { get; set; }
         public int NewQuantity { get; set; }
         public int Change { get; set; }
-        public ActionType Type { get; set; }
+        public ActionType ActionType { get; set; }
         public Item Item { get; set; }
 
         public override bool Equals(object obj)
@@ -28,6 +28,11 @@ namespace StokTakip.Data.Entities
             {
                 return false;
             }
+        }
+
+        public override int GetHashCode()
+        {
+            return Id;
         }
     }
 }

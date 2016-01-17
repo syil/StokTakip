@@ -50,6 +50,18 @@ namespace StokTakip.UI.Helpers
             SendMessage(textbox.Handle, EM_SETCUEBANNER, (IntPtr)BOOL, cueText);
         }
 
+        public static void CueBanner(ComboBox comboBox, bool showCueWhenFocus, string cueText)
+        {
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+                return;
+
+            uint BOOL = 0;
+            if (showCueWhenFocus)
+                BOOL = 1;
+
+            SendMessage(comboBox.Handle, CB_SETCUEBANNER, (IntPtr)BOOL, cueText);
+        }
+
         public static void DrawTopBorder(Panel panel, Color borderColor)
         {
             panel.Paint += (sender, e) =>

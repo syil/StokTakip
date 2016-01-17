@@ -1,18 +1,20 @@
 ﻿using StokTakip.Data.Base.Repositories;
-using StokTakip.Data.EF.Mappers;
 using StokTakip.Data.EF.Model;
-using StokTakip.Data.Entities;
 using System;
 using System.Collections.Generic;
-using System.Data.Objects;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommonLibrary.Utilities;
+using AutoMapper;
 
 namespace StokTakip.Data.EF.Repositories
 {
     public class ItemRepository : RepositoryBase, IItemRepository
     {
+        private static readonly Logger logger = new Logger();
+
         public ItemRepository(StokContext context)
             : base(context)
         {
@@ -25,7 +27,8 @@ namespace StokTakip.Data.EF.Repositories
             {
                 try
                 {
-                    return context.Items.Where(i => i.Name.Contains(filterText)).ToList().Select(i => ItemMapper.Instance.ToEntity(i));
+                    var entities = context.Items.Include(i => i.ActionLogs).Where(i => i.Name.Contains(filterText)).ToList();
+                    return Mapper.Map<List<Entities.Item>>(entities);
                 }
                 catch (Exception ex)
                 {
@@ -44,20 +47,20 @@ namespace StokTakip.Data.EF.Repositories
             try
             {
                 var model = context.ItemProperties.Where(p => p.Key == property.Key && p.ItemId == item.Id).FirstOrDefault();
-
+                
                 if (model != null)
                 {
-                    ItemPropertyMapper.Instance.FromEntity(property, model);
+                    model.Value = property.Value;
                 }
                 else
                 {
-                    model = new Model.ItemProperty();
-                    ItemPropertyMapper.Instance.FromEntity(property, model);
+                    model = Mapper.Map<ItemProperty>(property);
                     model.ItemId = item.Id;
 
-                    context.ItemProperties.AddObject(model);
-                    context.SaveChanges();
+                    context.ItemProperties.Add(model);
                 }
+
+                context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -69,7 +72,8 @@ namespace StokTakip.Data.EF.Repositories
         {
             try
             {
-                return context.ItemProperties.Where(p => p.ItemId == item.Id).Select(p => ItemPropertyMapper.Instance.ToEntity(p)).ToArray();
+                var entities = context.ItemProperties.Where(p => p.ItemId == item.Id).ToList();
+                return Mapper.Map<List<Entities.ItemProperty>>(entities);
             }
             catch (Exception ex)
             {
@@ -86,7 +90,7 @@ namespace StokTakip.Data.EF.Repositories
 
                 if (model != null)
                 {
-                    context.DeleteObject(model);
+                    context.ItemProperties.Remove(model);
                     context.SaveChanges();
                 }
                 else
@@ -104,15 +108,15 @@ namespace StokTakip.Data.EF.Repositories
         {
             try
             {
-                var model = new Model.Item();
-                ItemMapper.Instance.FromEntity(entity, model);
+                var model = Mapper.Map<Item>(entity);
 
-                context.AddToItems(model);
+                context.Items.Add(model);
+
                 context.SaveChanges();
             }
             catch (Exception ex)
             {
-                base.RaiseException(ex, entity);
+                base.RaiseException(ex);
             }
         }
 
@@ -123,17 +127,7 @@ namespace StokTakip.Data.EF.Repositories
                 var itemId = (int)key;
                 var model = context.Items.Where(i => i.Id == itemId).FirstOrDefault();
 
-                if (model != null)
-                {
-                    var entity = new Entities.Item();
-                    ItemMapper.Instance.ToEntity(model, entity);
-
-                    return entity;
-                }
-                else
-                {
-                    return null;
-                }
+                return Mapper.Map<Entities.Item>(model);
             }
             catch (Exception ex)
             {
@@ -146,10 +140,9 @@ namespace StokTakip.Data.EF.Repositories
         {
             try
             {
-                var models = context.Items;
-                var entities = models.Select(i => i);
+                var entities = context.Items.Include(i => i.ActionLogs).ToList();
 
-                return entities.ToList().Select(i => ItemMapper.Instance.ToEntity(i));
+                return Mapper.Map<List<Entities.Item>>(entities);
             }
             catch (Exception ex)
             {
@@ -183,7 +176,7 @@ namespace StokTakip.Data.EF.Repositories
 
                 if (model != null)
                 {
-                    context.DeleteObject(model);
+                    context.Items.Remove(model);
                     context.SaveChanges();
                 }
                 else
@@ -201,14 +194,13 @@ namespace StokTakip.Data.EF.Repositories
         {
             try
             {
-                var model = context.Items.Where(i => i.Id == entity.Id).FirstOrDefault();
+                var model = context.Items.SingleOrDefault(i => i.Id == entity.Id);
 
                 if (model != null)
                 {
-                    ItemMapper.Instance.FromEntity(entity, model);
+                    model = Mapper.Map(entity, model);
 
                     context.SaveChanges();
-                    //context.Refresh(RefreshMode.StoreWins, context.Items);
                 }
                 else
                 {

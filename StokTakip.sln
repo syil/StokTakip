@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StokTakip.UI", "StokTakip.UI\StokTakip.UI.csproj", "{269058E8-0405-41FE-AAAA-D0E3FF68A1D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StokTakip.Data", "StokTakip.Data\StokTakip.Data.csproj", "{3160028A-593C-4ED6-8510-827AE26F2869}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StokTakip.Core", "StokTakip.Core\StokTakip.Core.csproj", "{7883B8C0-2748-4751-94C7-8D0027E82536}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLib", "CommonLib\CommonLib.csproj", "{48E38EC3-8464-44C0-9D39-155CBF35D93E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StokTakip.Data.Entities", "StokTakip.Data.Entities\StokTakip.Data.Entities.csproj", "{60A4BF45-326E-42A5-BC3F-1834682F4D73}"
 EndProject
@@ -31,10 +31,6 @@ Global
 		{7883B8C0-2748-4751-94C7-8D0027E82536}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7883B8C0-2748-4751-94C7-8D0027E82536}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7883B8C0-2748-4751-94C7-8D0027E82536}.Release|Any CPU.Build.0 = Release|Any CPU
-		{48E38EC3-8464-44C0-9D39-155CBF35D93E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48E38EC3-8464-44C0-9D39-155CBF35D93E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48E38EC3-8464-44C0-9D39-155CBF35D93E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48E38EC3-8464-44C0-9D39-155CBF35D93E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{60A4BF45-326E-42A5-BC3F-1834682F4D73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{60A4BF45-326E-42A5-BC3F-1834682F4D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60A4BF45-326E-42A5-BC3F-1834682F4D73}.Release|Any CPU.ActiveCfg = Release|Any CPU

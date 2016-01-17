@@ -1,4 +1,4 @@
-﻿using CommonLib;
+﻿using CommonLibrary.Utilities;
 using StokTakip.Data.Base;
 using System;
 using System.Collections.Generic;
@@ -9,12 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Data.SqlServerCe;
 
 namespace StokTakip.Data.EF.DatabaseManagers
 {
     public class SqlCompactDatabaseManager : IDatabaseManager
     {
-        private static readonly Logger logger = new Logger(typeof(SqlCompactDatabaseManager));
+        private static readonly Logger logger = new Logger();
         private static readonly string emptyDatabaseFile = @".\Data\EmptyStokBase.sdf";
         private static readonly string backupDateTimeFormat = "yyyyMMddHHmmss";
         private string databaseFile;
@@ -87,23 +88,54 @@ namespace StokTakip.Data.EF.DatabaseManagers
                     Backup();
                 }
             }
+            else
+            {
+                Backup();
+            }
         }
 
         public void Backup()
         {
-            string backupDatabaseFile = string.Format("{0}_{1:" + backupDateTimeFormat + "}.bck", this.databaseFile, DateTime.Now);
+            string backupDatabaseFile = string.Format("{0}_{1}.bck", this.databaseFile, DateTime.Now.ToString(backupDateTimeFormat));
             File.Copy(this.databaseFile, backupDatabaseFile);
             logger.Info("Database backup created [{0}]", backupDatabaseFile);
         }
 
         public void Update()
         {
-            throw new NotImplementedException();
+            using (SqlCeConnection connection = new SqlCeConnection(InternalConfiguration.Instance.GetProviderConnectionString()))
+            {
+                connection.Open();
+                
+                foreach (string queryFile in Directory.EnumerateFiles(@".\Data\", "*.sql"))
+                {
+                    string[] queries = File.ReadAllText(queryFile).Split(new string[] { "GO" }, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (queries.Length >= 2)
+                    {
+                        using (SqlCeCommand expensesUpdateCommand = new SqlCeCommand(queries[0], connection))
+                        {
+                            int queryCheck = (int)expensesUpdateCommand.ExecuteScalar();
+
+                            if (queryCheck == 0)
+                            {
+                                for (int i = 1; i < queries.Length; i++)
+                                {
+                                    expensesUpdateCommand.CommandText = queries[i];
+                                    expensesUpdateCommand.ExecuteNonQuery();
+                                }
+                            }
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
         }
 
         public void Restore(DateTime backupDate, bool createCurrentBackup)
         {
-            string backupDatabaseFile = string.Format("{0}_{1:" + backupDateTimeFormat + "}.bck", this.databaseFile, backupDate);
+            string backupDatabaseFile = string.Format("{0}_{1}.bck", this.databaseFile, backupDate.ToString(backupDateTimeFormat));
             if (File.Exists(backupDatabaseFile))
             {
                 if (createCurrentBackup)

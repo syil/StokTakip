@@ -11,6 +11,7 @@ namespace StokTakip.Data.Base
     {
         IItemRepository Item { get; }
         IActionRepository Action { get; }
+        IExpenseRepository Expense { get; }
         void RunTransactionalWork(Action work);
     }
 }

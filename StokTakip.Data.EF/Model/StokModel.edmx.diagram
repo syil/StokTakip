@@ -4,12 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7c977941f1014de7a76c934d6c0bfff9" Name="Diagram1" ShowGrid="false" ZoomLevel="100" >
+      <Diagram DiagramId="7c977941f1014de7a76c934d6c0bfff9" Name="Default" ShowGrid="false" ZoomLevel="100" >
         <EntityTypeShape EntityType="StokTakip.Data.EF.Model.ActionLog" Width="1.5" PointX="5" PointY="2.625" />
         <EntityTypeShape EntityType="StokTakip.Data.EF.Model.ItemProperty" Width="1.5" PointX="0.5" PointY="2.5" />
-        <EntityTypeShape EntityType="StokTakip.Data.EF.Model.Item" Width="1.5" PointX="2.125" PointY="4.875" />
+        <EntityTypeShape EntityType="StokTakip.Data.EF.Model.Item" Width="1.5" PointX="2.75" PointY="3" />
         <AssociationConnector Association="StokTakip.Data.EF.Model.FK_ItemToActionLog" />
         <AssociationConnector Association="StokTakip.Data.EF.Model.FK_ItemItemProperty" />
+        <EntityTypeShape EntityType="StokTakip.Data.EF.Model.Expense" Width="1.5" PointX="7.125" PointY="2.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

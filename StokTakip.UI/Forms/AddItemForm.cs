@@ -50,7 +50,7 @@ namespace StokTakip.UI.Forms
         public void ShowMessage(string message, string group, MessageType type)
         {
             MessageLabel.Text = message;
-            MessageLabel.ForeColor = type.GetColor();
+            MessageLabel.BackColor = type.GetColor();
 
             if (type == MessageType.Success)
             {

@@ -42,29 +42,10 @@
             ItemPanel = new System.Windows.Forms.Panel();
             ItemNameLabel = new System.Windows.Forms.Label();
             HeaderPanel.SuspendLayout();
+            ItemPanel.SuspendLayout();
             this.ActionsPanel.SuspendLayout();
             this.NewItemFormLayoutTable.SuspendLayout();
-            ItemPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // ItemNameTextBox
-            // 
-            this.ItemNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ItemNameTextBox.Location = new System.Drawing.Point(9, 28);
-            this.ItemNameTextBox.Name = "ItemNameTextBox";
-            this.ItemNameTextBox.Size = new System.Drawing.Size(376, 23);
-            this.ItemNameTextBox.TabIndex = 0;
-            // 
-            // AddItemButton
-            // 
-            this.AddItemButton.Location = new System.Drawing.Point(304, 9);
-            this.AddItemButton.Name = "AddItemButton";
-            this.AddItemButton.Size = new System.Drawing.Size(87, 27);
-            this.AddItemButton.TabIndex = 2;
-            this.AddItemButton.Text = "Ekle";
-            this.AddItemButton.UseVisualStyleBackColor = true;
-            this.AddItemButton.Click += new System.EventHandler(this.AddItemButton_Click);
             // 
             // HeaderPanel
             // 
@@ -88,12 +69,52 @@
             HeaderTextLabel.Text = "Yeni Öğe Ekle";
             HeaderTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // ItemPanel
+            // 
+            ItemPanel.Controls.Add(ItemNameLabel);
+            ItemPanel.Controls.Add(this.ItemNameTextBox);
+            ItemPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            ItemPanel.Location = new System.Drawing.Point(3, 3);
+            ItemPanel.Name = "ItemPanel";
+            ItemPanel.Size = new System.Drawing.Size(397, 62);
+            ItemPanel.TabIndex = 3;
+            // 
+            // ItemNameLabel
+            // 
+            ItemNameLabel.AutoSize = true;
+            ItemNameLabel.Location = new System.Drawing.Point(9, 10);
+            ItemNameLabel.Name = "ItemNameLabel";
+            ItemNameLabel.Size = new System.Drawing.Size(50, 15);
+            ItemNameLabel.TabIndex = 1;
+            ItemNameLabel.Text = "Öğe Adı";
+            // 
+            // ItemNameTextBox
+            // 
+            this.ItemNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ItemNameTextBox.Location = new System.Drawing.Point(9, 28);
+            this.ItemNameTextBox.Name = "ItemNameTextBox";
+            this.ItemNameTextBox.Size = new System.Drawing.Size(376, 23);
+            this.ItemNameTextBox.TabIndex = 0;
+            // 
+            // AddItemButton
+            // 
+            this.AddItemButton.Location = new System.Drawing.Point(304, 9);
+            this.AddItemButton.Name = "AddItemButton";
+            this.AddItemButton.Size = new System.Drawing.Size(87, 27);
+            this.AddItemButton.TabIndex = 2;
+            this.AddItemButton.Text = "Ekle";
+            this.AddItemButton.UseVisualStyleBackColor = true;
+            this.AddItemButton.Click += new System.EventHandler(this.AddItemButton_Click);
+            // 
             // MessageLabel
             // 
             this.MessageLabel.AutoSize = true;
-            this.MessageLabel.Location = new System.Drawing.Point(12, 15);
+            this.MessageLabel.ForeColor = System.Drawing.Color.White;
+            this.MessageLabel.Location = new System.Drawing.Point(12, 13);
             this.MessageLabel.Name = "MessageLabel";
-            this.MessageLabel.Size = new System.Drawing.Size(0, 15);
+            this.MessageLabel.Padding = new System.Windows.Forms.Padding(3);
+            this.MessageLabel.Size = new System.Drawing.Size(6, 21);
             this.MessageLabel.TabIndex = 4;
             // 
             // ActionsPanel
@@ -119,25 +140,6 @@
             this.NewItemFormLayoutTable.Size = new System.Drawing.Size(403, 68);
             this.NewItemFormLayoutTable.TabIndex = 6;
             // 
-            // ItemPanel
-            // 
-            ItemPanel.Controls.Add(ItemNameLabel);
-            ItemPanel.Controls.Add(this.ItemNameTextBox);
-            ItemPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            ItemPanel.Location = new System.Drawing.Point(3, 3);
-            ItemPanel.Name = "ItemPanel";
-            ItemPanel.Size = new System.Drawing.Size(397, 62);
-            ItemPanel.TabIndex = 3;
-            // 
-            // ItemNameLabel
-            // 
-            ItemNameLabel.AutoSize = true;
-            ItemNameLabel.Location = new System.Drawing.Point(9, 10);
-            ItemNameLabel.Name = "ItemNameLabel";
-            ItemNameLabel.Size = new System.Drawing.Size(50, 15);
-            ItemNameLabel.TabIndex = 1;
-            ItemNameLabel.Text = "Öğe Adı";
-            // 
             // AddItemForm
             // 
             this.AcceptButton = this.AddItemButton;
@@ -153,11 +155,11 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Yeni Öğe Ekle";
             HeaderPanel.ResumeLayout(false);
+            ItemPanel.ResumeLayout(false);
+            ItemPanel.PerformLayout();
             this.ActionsPanel.ResumeLayout(false);
             this.ActionsPanel.PerformLayout();
             this.NewItemFormLayoutTable.ResumeLayout(false);
-            ItemPanel.ResumeLayout(false);
-            ItemPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }

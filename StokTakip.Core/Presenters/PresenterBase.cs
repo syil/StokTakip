@@ -1,4 +1,4 @@
-﻿using CommonLib;
+﻿using CommonLibrary.Utilities;
 using StokTakip.Core.Views;
 using System;
 using System.Collections.Generic;
@@ -14,6 +14,8 @@ namespace StokTakip.Core.Presenters
         protected T view;
         protected Logger logger;
 
+        public bool IsInitialized { get; protected set; }
+
         public PresenterBase(T view)
         {
             this.view = view;
@@ -22,7 +24,7 @@ namespace StokTakip.Core.Presenters
 
         public virtual void Initialize()
         {
-
+            this.IsInitialized = true;
         }
     }
 }

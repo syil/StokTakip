@@ -1,4 +1,4 @@
-﻿using CommonLib.IoC;
+﻿using CommonLibrary.IoC;
 using StokTakip.Core.Views;
 using StokTakip.Data.Base;
 using System;
@@ -27,10 +27,12 @@ namespace StokTakip.Core.Presenters
             }
             catch (Exception ex)
             {
-                this.logger.Error(ex);
+                this.logger.Exception(ex);
 
                 this.view.ShowMessage("Geri yükleme listesi alınamadı", "Initialize", MessageType.Error);
             }
+
+            base.Initialize();
         }
 
         public bool Restore()
@@ -44,7 +46,7 @@ namespace StokTakip.Core.Presenters
             }
             catch (Exception ex)
             {
-                this.logger.Error(ex);
+                this.logger.Exception(ex);
                 this.view.ShowMessage("Geri yükleme başarısız", "Restore", MessageType.Error);
 
                 return false;

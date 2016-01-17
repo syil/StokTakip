@@ -1,4 +1,4 @@
-﻿using CommonLib;
+﻿using CommonLibrary.Utilities;
 using StokTakip.Data.Base;
 using StokTakip.Data.Base.Repositories;
 using StokTakip.Data.EF.Model;
@@ -12,50 +12,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using Entities = StokTakip.Data.Entities;
+using AutoMapper;
 
 namespace StokTakip.Data.EF
 {
     public class RepositoryContainer : IRepositoryContainer
     {
-        private static readonly string ConnectionStringTemplate = "metadata=res://*/Model.StokModel.csdl|res://*/Model.StokModel.ssdl|res://*/Model.StokModel.msl;provider={0};provider connection string=\"{1}\"";
-        private static readonly Logger logger = new Logger(typeof(RepositoryContainer));
+        private static readonly Logger logger = new Logger();
 
         private ItemRepository itemRepository;
         private ActionRepository actionRepository;
+        private ExpenseRepository expenseRepository;
         private StokContext entityContext;
-
-        public string DataSource
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings.Get("StokTakip.Data.EF.DataSource");
-            }
-        }
-
-        public string Provider
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings.Get("StokTakip.Data.EF.Provider");
-            }
-        }
-
-        public string ConnectionString
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings.Get("StokTakip.Data.EF.ConnectionString");
-            }
-        }
-
 
         public RepositoryContainer()
         {
-            PrepareDatabase();
-            entityContext = new StokContext(GenerateConnectionString());
+            entityContext = new StokContext(InternalConfiguration.Instance.GetEntityFrameworkConnectionString());
+            entityContext.Database.Log = msg => logger.Debug("EF Debug: {0}", msg);
 
             this.itemRepository = new ItemRepository(entityContext);
             this.actionRepository = new ActionRepository(entityContext);
+            this.expenseRepository = new ExpenseRepository(entityContext);
+
+            Mapper.CreateMap<Item, Entities.Item>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            Mapper.CreateMap<ActionLog, Entities.ActionLog>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            Mapper.CreateMap<ItemProperty, Entities.ItemProperty>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            Mapper.CreateMap<Expense, Entities.Expense>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
         }
 
         public IItemRepository Item
@@ -68,14 +51,19 @@ namespace StokTakip.Data.EF
             get { return actionRepository; }
         }
 
+        public IExpenseRepository Expense
+        {
+            get { return expenseRepository; }
+        }
+
         public void RunTransactionalWork(Action work)
         {
-            if (entityContext.Connection.State == ConnectionState.Closed)
+            if (entityContext.Database.Connection.State == ConnectionState.Closed)
             {
-                entityContext.Connection.Open();
+                entityContext.Database.Connection.Open();
             }
 
-            using (var transaction = entityContext.Connection.BeginTransaction())
+            using (var transaction = entityContext.Database.BeginTransaction())
             {
                 try
                 {
@@ -89,20 +77,6 @@ namespace StokTakip.Data.EF
                     throw;
                 }
             }
-        }
-
-        private string GenerateConnectionString()
-        {
-            string dataSource = Environment.ExpandEnvironmentVariables(DataSource);
-            string providerConnectionString = ConnectionString.Replace("{DataSource}", dataSource);
-            string actualConnectionString = string.Format(ConnectionStringTemplate, Provider, providerConnectionString);
-
-            return actualConnectionString;
-        }
-
-        private void PrepareDatabase()
-        {
-            
         }
     }
 }

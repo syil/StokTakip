@@ -1,5 +1,4 @@
-﻿using CommonLib;
-using CommonLib.IoC;
+﻿using CommonLibrary.IoC;
 using StokTakip.Core.Views;
 using StokTakip.Data.Base;
 using System;

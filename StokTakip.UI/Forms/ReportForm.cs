@@ -13,6 +13,7 @@ using StokTakip.Data.Entities;
 using Charting = System.Windows.Forms.DataVisualization.Charting;
 using StokTakip.Core.Presenters;
 using StokTakip.UI.Helpers;
+using CommonLibrary.Extensions;
 
 namespace StokTakip.UI.Forms
 {
